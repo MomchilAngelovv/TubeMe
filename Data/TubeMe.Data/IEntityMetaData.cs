@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TubeMe.Data
+{
+    public interface IEntityMetaData
+    {
+        public DateTime CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
+        public string MetaData { get; set; }
+    }
+}

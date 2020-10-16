@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
 
 export class Register extends Component {
 

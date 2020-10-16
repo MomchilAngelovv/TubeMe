@@ -4,12 +4,7 @@ export class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: "" };
-  }
-
-  componentDidMount() {
-    let user = localStorage.getItem("user")
-    this.setState({ name: user })
+    this.state = { name: localStorage.getItem("user") };
   }
 
   render() {
