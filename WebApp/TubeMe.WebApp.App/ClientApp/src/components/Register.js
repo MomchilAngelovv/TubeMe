@@ -4,7 +4,12 @@ export class Register extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: 'Monkata' };
+
+    this.state = {
+      email: '',
+      password: '',
+      repeatPassword: ''
+    };
   }
 
   handleSubmit = async (e) => {
@@ -12,9 +17,9 @@ export class Register extends Component {
     localStorage.setItem('user', 'monk');
 
     let data = {
-      username: "Monkata",
-      password: "123456",
-      repeatPassword: "123456"
+      email: this.state.email,
+      password: this.state.password,
+      repeatPassword: this.state.repeatPassword
     }
 
     let response = await (await fetch(`https://localhost:44367/api/users/register`, {
@@ -22,12 +27,21 @@ export class Register extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data) 
+      body: JSON.stringify(data)
     })).json();
 
     console.log(response)
 
     this.props.history.push('/');
+  }
+
+  handleInputChange = (event) => {
+    let target = event.target;
+    let name = target.name;
+
+    this.setState({
+      [name]: target.value
+    });
   }
 
   render() {
@@ -38,14 +52,21 @@ export class Register extends Component {
             <div className="field">
               <label className="label">Name</label>
               <div className="control">
-                <input className="input" type="text" placeholder="Text input" />
+                <input name="email" type="text" onChange={this.handleInputChange} placeholder="Username:" className="input" />
               </div>
             </div>
 
             <div className="field">
               <label className="label">Username</label>
-              <div className="control has-icons-left has-icons-right">
-                <input className="input" type="text" placeholder="Text input" />
+              <div className="control">
+                <input name="password" type="text" onChange={this.handleInputChange} placeholder="Password:" className="input" />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">Username</label>
+              <div className="control">
+                <input name="repeatPassword" type="text" onChange={this.handleInputChange} placeholder="Repeat password:" className="input" />
               </div>
             </div>
 

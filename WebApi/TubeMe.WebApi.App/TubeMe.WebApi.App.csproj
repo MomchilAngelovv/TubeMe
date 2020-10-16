@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\TubeMe.Data\TubeMe.Data.csproj" />
     <ProjectReference Include="..\TubeMe.WebApi.Models\TubeMe.WebApi.Models.csproj" />
+    <ProjectReference Include="..\TubeMe.WebApi.Services\TubeMe.WebApi.Services.csproj" />
   </ItemGroup>
 
 
