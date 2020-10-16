@@ -9,6 +9,10 @@ export class Login extends Component {
     }
   }
 
+  componentDidMount() {
+    localStorage.clear();
+  }
+
   render() {
     return (
       <div>

@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
 
 export class Register extends Component {
 
@@ -7,9 +8,10 @@ export class Register extends Component {
     this.state = { value: 'Monkata' };
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
-    alert('clicked')
+    localStorage.setItem('user', 'monk');
+    this.props.history.push('/')
   }
 
   render() {
@@ -27,19 +29,13 @@ export class Register extends Component {
             <div className="field">
               <label className="label">Username</label>
               <div className="control has-icons-left has-icons-right">
-                <input className="input is-success" type="text" placeholder="Text input" />
-                <span className="icon is-small is-left"><i className="fas fa-user"></i></span>
-                <span className="icon is-small is-right"><i className="fas fa-check"></i></span>
+                <input className="input" type="text" placeholder="Text input" />
               </div>
-              <p className="help is-success">This username is available</p>
             </div>
 
             <div className="field is-grouped">
               <div className="control">
                 <button className="button is-link" onClick={ this.handleSubmit }>Submit</button>
-              </div>
-              <div className="control">
-                <button className="button is-link is-light">Cancel</button>
               </div>
             </div>
           </div>

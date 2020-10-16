@@ -15,8 +15,7 @@ export class NavMenu extends Component {
       <header>
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
-            <Link href="/#" to="/" className="navbar-item"><img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="Description" /></Link>
-
+            <Link href="/#" to="/" className="navbar-item"><img src="https://img.favpng.com/17/19/10/turney-town-shell-logo-internet-online-and-offline-png-favpng-CcVyuzhwCY2g6XrdfXW94kCgB.jpg" alt="Description" /></Link>
             <a href="/#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
