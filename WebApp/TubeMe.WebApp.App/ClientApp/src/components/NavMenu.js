@@ -5,6 +5,9 @@ export class NavMenu extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+
+    }
   }
 
   render() {
@@ -12,11 +15,9 @@ export class NavMenu extends Component {
       <header>
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
-            <a className="navbar-item" href="https://bulma.io">
-              <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" />
-            </a>
+            <Link href="/#" to="/" className="navbar-item"><img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="Description" /></Link>
 
-            <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <a href="/#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
@@ -25,16 +26,14 @@ export class NavMenu extends Component {
 
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-start">
-              <Link to="/" className="navbar-item">Home</Link>
-
               <div className="navbar-item has-dropdown is-hoverable">
-                <a className="navbar-link">More</a>
+                <a href="/#" className="navbar-link">More</a>
                 <div className="navbar-dropdown">
-                  <a className="navbar-item">About</a>
-                  <a className="navbar-item">Jobs</a>
-                  <a className="navbar-item">Contact</a>
+                  <a href="/#" className="navbar-item">About</a>
+                  <a href="/#" className="navbar-item">Jobs</a>
+                  <a href="/#" className="navbar-item">Contact</a>
                   <hr className="navbar-divider" />
-                  <a className="navbar-item">Report an issue</a>
+                <a href="/#" className="navbar-item">Report an issue</a>
                 </div>
               </div>
             </div>
@@ -42,8 +41,8 @@ export class NavMenu extends Component {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
-                  <Link to="/register" className="button is-primary">Register</Link>
-                  <Link to="/login" className="button is-light">Login</Link>
+                  <Link href="/#" to="/register" className="button is-primary">Register</Link>
+                  <Link href="/#" to="/login" className="button is-light">Login</Link>
                 </div>
               </div>
             </div>
