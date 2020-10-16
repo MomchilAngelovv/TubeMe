@@ -32,22 +32,24 @@ namespace TubeMe.WebApi.App
                 options.UseSqlServer(this.configuration.GetConnectionString("SqlServer")); 
             });
 
+            services.AddCors();
             services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseCors(options =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                options.AllowAnyOrigin();
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
             app.UseAuthorization();
-
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

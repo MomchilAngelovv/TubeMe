@@ -7,10 +7,27 @@ export class Register extends Component {
     this.state = { value: 'Monkata' };
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     localStorage.setItem('user', 'monk');
-    this.props.history.push('/')
+
+    let data = {
+      username: "Monkata",
+      password: "123456",
+      repeatPassword: "123456"
+    }
+
+    let response = await (await fetch(`https://localhost:44367/api/users/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) 
+    })).json();
+
+    console.log(response)
+
+    this.props.history.push('/');
   }
 
   render() {
@@ -34,7 +51,7 @@ export class Register extends Component {
 
             <div className="field is-grouped">
               <div className="control">
-                <button className="button is-link" onClick={ this.handleSubmit }>Submit</button>
+                <button className="button is-link" onClick={this.handleSubmit}>Submit</button>
               </div>
             </div>
           </div>
