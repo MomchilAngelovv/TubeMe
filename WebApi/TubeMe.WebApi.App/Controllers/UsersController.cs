@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using TubeMe.WebApi.App.Utilities;
 using TubeMe.WebApi.Models.BindingModels;
 using TubeMe.WebApi.Services;
 
@@ -14,15 +20,26 @@ namespace TubeMe.WebApi.App.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService usersService;
+        private readonly IOptions<JwtConfiguration> jwtConfiguration;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, IOptions<JwtConfiguration> jwtConfiguration)
         {
             this.usersService = usersService;
+            this.jwtConfiguration = jwtConfiguration;
         }
 
-        public ActionResult Login()
+        [HttpPost("login")]
+        public ActionResult<object> Login(UsersLoginBindingModel bindingModel)
         {
-            return null;
+            
+
+            var response = new
+            {
+                AccessToken = "123123123",
+                RefreshToken = "123123123"
+            };
+
+            return response;
         }
 
         [HttpPost("register")]

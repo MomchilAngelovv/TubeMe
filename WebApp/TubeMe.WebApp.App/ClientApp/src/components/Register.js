@@ -50,21 +50,21 @@ export class Register extends Component {
         <div className="columns">
           <div className="column is-half">
             <div className="field">
-              <label className="label">Name</label>
+              <label className="label">Email</label>
               <div className="control">
-                <input name="email" type="text" onChange={this.handleInputChange} placeholder="Username:" className="input" />
+                <input name="email" type="text" onChange={this.handleInputChange} placeholder="Email:" className="input" />
               </div>
             </div>
 
             <div className="field">
-              <label className="label">Username</label>
+              <label className="label">Password</label>
               <div className="control">
                 <input name="password" type="text" onChange={this.handleInputChange} placeholder="Password:" className="input" />
               </div>
             </div>
 
             <div className="field">
-              <label className="label">Username</label>
+              <label className="label">Repeat password</label>
               <div className="control">
                 <input name="repeatPassword" type="text" onChange={this.handleInputChange} placeholder="Repeat password:" className="input" />
               </div>
