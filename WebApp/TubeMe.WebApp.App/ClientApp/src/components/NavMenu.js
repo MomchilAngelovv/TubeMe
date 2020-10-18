@@ -5,18 +5,44 @@ export class NavMenu extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      email: localStorage.getItem("Email"),
-      loggedIn: true
+      email: '',
+      isLoggedIn: true,
     }
   }
 
   handleLogout = async (e) => {
     localStorage.clear();
-    this.setState((state) => {
-      return { count: state.isLoggedIn = false }
+    this.setState({
+      email: null,
+      isLoggedIn: false
     })
+  }
+
+  genereteUserButtons() {
+    if (this.state.isLoggedIn) {
+      return (
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              <button onClick={this.handleLogout} className="button is-primary">Logout</button>
+            </div>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              <Link href="/#" to="/register" className="button is-primary">Register</Link>
+              <Link href="/#" to="/login" className="button is-light">Login</Link>
+            </div>
+          </div>
+        </div>
+      )
+    }
   }
 
   render() {
@@ -45,24 +71,7 @@ export class NavMenu extends Component {
                 </div>
               </div>
             </div>
-            {isLoggedIn
-              ?
-              <div className="navbar-end">
-                <div className="navbar-item">
-                  <div className="buttons">
-                    <button onClick={this.handleLogout} className="button is-primary">Logout</button>
-                  </div>
-                </div>
-              </div>
-              :
-              <div className="navbar-end">
-                <div className="navbar-item">
-                  <div className="buttons">
-                    <Link href="/#" to="/register" className="button is-primary">Register</Link>
-                    <Link href="/#" to="/login" className="button is-light">Login</Link>
-                  </div>
-                </div>
-              </div>}
+            {this.genereteUserButtons()}
           </div>
         </nav>
       </header>
