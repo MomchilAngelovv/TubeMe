@@ -22,10 +22,12 @@ export class Register extends Component {
       repeatPassword: this.state.repeatPassword
     }
 
+    let accesToken = localStorage.getItem('accessToken')
     let response = await (await fetch(`https://localhost:44367/api/users/register`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accesToken
       },
       body: JSON.stringify(data)
     })).json();

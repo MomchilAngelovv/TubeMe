@@ -11,7 +11,7 @@ namespace TubeMe.WebApi.Models.BindingModels
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [MinLength(3)]
+        [MinLength(3)]  
         public string Password { get; set; }
         [Required]
         [Compare(nameof(Password))]

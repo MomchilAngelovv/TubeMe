@@ -29,8 +29,7 @@ export class Login extends Component {
 
     console.log(response)
 
-    //localStorage.setItem('AccessToken', response.accessToken)
-    //localStorage.setItem('RefreshToken', response.refreshToken)
+    localStorage.setItem('AccessToken', response.accessToken)
 
     this.props.history.push('/');
   }
