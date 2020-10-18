@@ -75,8 +75,6 @@ namespace TubeMe.WebApi.App
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = jwtConfiguration.Issuer,
-                    ValidAudience = jwtConfiguration.Audience,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Secret)),
                     ValidateAudience = true,

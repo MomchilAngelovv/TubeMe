@@ -12,7 +12,6 @@ export class Login extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem('user', 'monk');
 
     let data = {
       email: this.state.email,
@@ -27,9 +26,9 @@ export class Login extends Component {
       body: JSON.stringify(data)
     })).json();
 
-    console.log(response)
-
     localStorage.setItem('AccessToken', response.accessToken)
+    localStorage.setItem('Username', response.userName)
+    localStorage.setItem('Email', response.email)
 
     this.props.history.push('/');
   }

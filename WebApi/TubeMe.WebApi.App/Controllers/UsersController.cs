@@ -47,7 +47,6 @@ namespace TubeMe.WebApi.App.Controllers
                 return Unauthorized();
             }
 
-            //var symmetricKey = Convert.FromBase64String();
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var now = DateTime.UtcNow;
@@ -65,8 +64,8 @@ namespace TubeMe.WebApi.App.Controllers
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Secret)), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var stoken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(stoken);
+            var secutiryToken = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.WriteToken(secutiryToken);
 
             var response = new
             {

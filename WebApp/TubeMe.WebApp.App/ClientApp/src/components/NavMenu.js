@@ -5,9 +5,18 @@ export class NavMenu extends Component {
 
   constructor(props) {
     super(props);
+    
     this.state = {
-
+      email: localStorage.getItem("Email"),
+      loggedIn: true
     }
+  }
+
+  handleLogout = async (e) => {
+    localStorage.clear();
+    this.setState((state) => {
+      return { count: state.isLoggedIn = false }
+    })
   }
 
   render() {
@@ -32,19 +41,28 @@ export class NavMenu extends Component {
                   <a href="/#" className="navbar-item">Jobs</a>
                   <a href="/#" className="navbar-item">Contact</a>
                   <hr className="navbar-divider" />
-                <a href="/#" className="navbar-item">Report an issue</a>
+                  <a href="/#" className="navbar-item">Report an issue</a>
                 </div>
               </div>
             </div>
-
-            <div className="navbar-end">
-              <div className="navbar-item">
-                <div className="buttons">
-                  <Link href="/#" to="/register" className="button is-primary">Register</Link>
-                  <Link href="/#" to="/login" className="button is-light">Login</Link>
+            {isLoggedIn
+              ?
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <button onClick={this.handleLogout} className="button is-primary">Logout</button>
+                  </div>
                 </div>
               </div>
-            </div>
+              :
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <Link href="/#" to="/register" className="button is-primary">Register</Link>
+                    <Link href="/#" to="/login" className="button is-light">Login</Link>
+                  </div>
+                </div>
+              </div>}
           </div>
         </nav>
       </header>

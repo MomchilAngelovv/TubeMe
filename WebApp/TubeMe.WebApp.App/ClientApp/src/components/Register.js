@@ -14,7 +14,6 @@ export class Register extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem('user', 'monk');
 
     let data = {
       email: this.state.email,
@@ -23,7 +22,7 @@ export class Register extends Component {
     }
 
     let accesToken = localStorage.getItem('accessToken')
-    let response = await (await fetch(`https://localhost:44367/api/users/register`, {
+    await (await fetch(`https://localhost:44367/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,9 +31,7 @@ export class Register extends Component {
       body: JSON.stringify(data)
     })).json();
 
-    console.log(response)
-
-    this.props.history.push('/');
+    this.props.history.push('/login');
   }
 
   handleInputChange = (event) => {
