@@ -19,9 +19,12 @@ namespace TubeMe.WebApi.App.Controllers
         [HttpGet("testdata")]
         public ActionResult<object> TestData()
         {
-            var a = this;
+            var array = new List<int>();
 
-            var array = new List<int> { 1, 2, 3, 4 };
+            for (int i = 0; i < 3; i++)
+            {
+                array.Add(new Random().Next(0, 100));
+            }
 
             var response = new
             {
