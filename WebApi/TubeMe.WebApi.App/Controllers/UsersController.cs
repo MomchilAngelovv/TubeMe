@@ -41,14 +41,19 @@ namespace TubeMe.WebApi.App.Controllers
         public async Task<ActionResult<object>> Login(UsersLoginBindingModel bindingModel)
         {
             var user = await this.userManager.FindByEmailAsync(bindingModel.Email);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
             var hashedPassword = this.userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, bindingModel.Password);
-            if (user == null || hashedPassword != PasswordVerificationResult.Success)
+            if (hashedPassword != PasswordVerificationResult.Success)
             {
                 return Unauthorized();
             }
 
             var userRole = (await this.userManager.GetRolesAsync(user)).Single();
-            var tokenHandler = new JwtSecurityTokenHandler();
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -61,6 +66,7 @@ namespace TubeMe.WebApi.App.Controllers
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Secret)), SecurityAlgorithms.HmacSha256Signature)
             };
 
+            var tokenHandler = new JwtSecurityTokenHandler();
             var secutiryToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(secutiryToken);
 

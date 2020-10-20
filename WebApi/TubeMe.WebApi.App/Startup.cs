@@ -99,7 +99,7 @@ namespace TubeMe.WebApi.App
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseMiddleware<ParseJwtTokenMiddleware>();
+            //app.UseMiddleware<ParseJwtTokenMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
