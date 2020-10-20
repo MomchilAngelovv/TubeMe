@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TubeMe.Data;
 
@@ -21,9 +25,10 @@ namespace TubeMe.WebApi.App.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize]
         public ActionResult<string> Welcome()
         {
-            var a = this;
+            var user = this.User;
             return "Welcome";
         }
 
@@ -31,16 +36,10 @@ namespace TubeMe.WebApi.App.Controllers
         public ActionResult<object> TestData()
         {
             var user = this.User;
-            var array = new List<int>();
 
-            for (int i = 0; i < 3; i++)
-            {
-                array.Add(new Random().Next(0, 100));
-            }
-
+          
             var response = new
             {
-                Numbers = array,
                 Name = "asdas",
                 Date = DateTime.Now
             };

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -11,45 +14,39 @@ namespace TubeMe.WebApi.App.Utilities
     public class ParseJwtTokenMiddleware
     {
         private readonly RequestDelegate next;
+        private readonly IConfiguration configuration;
 
-        public ParseJwtTokenMiddleware(RequestDelegate next)
+        public ParseJwtTokenMiddleware(RequestDelegate next, IConfiguration configuration)
         {
             this.next = next;
+            this.configuration = configuration;
         }
 
         public async Task Invoke(HttpContext context)
         {
             string authHeader = context.Request.Headers["Authorization"];
 
+            var token = authHeader?.Replace("Bearer ", string.Empty);
             if (authHeader != null)
             {
-                //Reading the JWT middle part           
-                int startPoint = authHeader.IndexOf(".") + 1;
-                int endPoint = authHeader.LastIndexOf(".");
+                var principal = new JwtSecurityTokenHandler()
+                                   .ValidateToken(token,
+                                       new TokenValidationParameters
+                                       {
+                                           ValidateIssuer = true,
+                                           ValidIssuer = this.configuration["JwtConfiguration:Issuer"],
+                                           ValidateIssuerSigningKey = true,
+                                           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["JwtConfiguration:Secret"])),
+                                           ValidAudience = this.configuration["JwtConfiguration:Audience"],
+                                           ValidateAudience = true,
+                                           ValidateLifetime = true,
+                                           ClockSkew = TimeSpan.FromMinutes(1),
+                                       },
+                                   out var validatedToken);
 
-                var tokenString = authHeader
-                    .Substring(startPoint, endPoint - startPoint).Split(".");
-                var token = tokenString[0].ToString() + "==";
+                context.User = principal;
 
-                var credentialString = Encoding.UTF8
-                    .GetString(Convert.FromBase64String(token));
-
-                // Splitting the data from Jwt
-                var credentials = credentialString.Split(new char[] { ':', ',' });
-
-                // Trim this Username and UserRole.
-                var userName = credentials[3].Replace("\"", "");
-
-                // Identity Principal
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, userName),
-                };
-
-                var identity = new ClaimsIdentity(claims, "basic");
-                context.User = new ClaimsPrincipal(identity);
             }
-            //Pass to the next middleware
             await next(context);
         }
     }

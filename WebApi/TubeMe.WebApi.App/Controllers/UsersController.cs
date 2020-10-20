@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TubeMe.Data;
@@ -25,15 +26,17 @@ namespace TubeMe.WebApi.App.Controllers
     {
         private readonly IUsersService usersService;
         private readonly UserManager<TubeMeUser> userManager;
+        private readonly IConfiguration configuration;
         private readonly JwtConfiguration jwtConfiguration;
 
         public UsersController(
             IUsersService usersService,
             IOptions<JwtConfiguration> jwtConfiguration,
-            UserManager<TubeMeUser> userManager)
+            UserManager<TubeMeUser> userManager, IConfiguration configuration)
         {
             this.usersService = usersService;
             this.userManager = userManager;
+            this.configuration = configuration;
             this.jwtConfiguration = jwtConfiguration.Value;
         }
 
@@ -56,6 +59,8 @@ namespace TubeMe.WebApi.App.Controllers
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Audience = this.configuration["JwtConfiguration:Audience"],
+                Issuer = this.configuration["JwtConfiguration:Issuer"],
                 Subject = new ClaimsIdentity(new[]
                 {
                      new Claim(ClaimTypes.NameIdentifier, user.Id),

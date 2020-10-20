@@ -98,8 +98,7 @@ namespace TubeMe.WebApi.App
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            //app.UseMiddleware<ParseJwtTokenMiddleware>();
+            app.UseMiddleware<ParseJwtTokenMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
