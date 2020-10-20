@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Video from './Video'
 
 export class Home extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -15,22 +14,34 @@ export class Home extends Component {
         {
           id: 2,
           imgUrl: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-          number: fff20
+          number: 20
         }
-      ]
+      ],
+      value: 'Hello'
     };
   }
 
   renderVideos = () => {
     return this.state.videos.map(video =>
-      <Video key={video.id} imageUrl={video.imgUrl} number={video.number} selected />
+      <Video key={video.id} onValueChange={this.handleValueChange} video={video} />
     )
   }
 
+  handleValueChange = (value, videoId) => {
+    let remainingVideoos = this.state.videos
+      .filter(video => video.id !== videoId);
+
+    this.setState({
+      videos: remainingVideoos
+    })
+    console.log('entered handler', videoId)
+  }
   render() {
     return (
       <React.Fragment>
         {this.renderVideos()}
+        <hr />
+        <div>{this.state.value}</div>
       </React.Fragment>
     );
   }

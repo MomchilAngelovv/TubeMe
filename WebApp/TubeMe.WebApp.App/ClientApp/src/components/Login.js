@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 
 export class Login extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -26,15 +25,15 @@ export class Login extends Component {
       body: JSON.stringify(data)
     })).json();
 
-    localStorage.setItem('AccessToken', response.accessToken)
-    localStorage.setItem('Username', response.userName)
-    localStorage.setItem('Email', response.email)
+    localStorage.setItem('UserName', response.userEmail);
+    localStorage.setItem('AccessToken', response.accessToken);
 
+    this.props.onLogin(response.userEmail);
     this.props.history.push('/');
   }
 
-  handleInputChange = (event) => {
-    let target = event.target;
+  handleInputChange = (e) => {
+    let target = e.target;
     let name = target.name;
 
     this.setState({
@@ -43,6 +42,7 @@ export class Login extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <React.Fragment>
         <div className="columns">
@@ -50,20 +50,20 @@ export class Login extends Component {
             <div className="field">
               <label className="label">Email</label>
               <div className="control">
-                <input name="email" type="text" onChange={this.handleInputChange} placeholder="Email:" className="input" />
+                <input name="email" type="text" onChange={(e) => this.handleInputChange(e)} placeholder="Email:" className="input" />
               </div>
             </div>
 
             <div className="field">
               <label className="label">Password</label>
               <div className="control">
-                <input name="password" type="text" onChange={this.handleInputChange} placeholder="Password:" className="input" />
+                <input name="password" type="text" onChange={(e) => this.handleInputChange(e)} placeholder="Password:" className="input" />
               </div>
             </div>
 
             <div className="field is-grouped">
               <div className="control">
-                <button className="button is-link" onClick={this.handleSubmit}>Submit</button>
+                <button className="button is-primary" onClick={(e) => this.handleSubmit(e)}>Login</button>
               </div>
             </div>
           </div>

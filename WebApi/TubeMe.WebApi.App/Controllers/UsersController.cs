@@ -69,8 +69,7 @@ namespace TubeMe.WebApi.App.Controllers
 
             var response = new
             {
-                Email = bindingModel.Email,
-                UserName = bindingModel.Email,
+                UserEmail = bindingModel.Email,
                 AccessToken = token,
             };
 

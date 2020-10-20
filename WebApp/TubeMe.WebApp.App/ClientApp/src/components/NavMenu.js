@@ -2,31 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export class NavMenu extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      email: '',
-      isLoggedIn: true,
-    }
-  }
-
-  handleLogout = async (e) => {
-    localStorage.clear();
-    this.setState({
-      email: null,
-      isLoggedIn: false
-    })
-  }
-
   genereteUserButtons() {
-    if (this.state.isLoggedIn) {
+    if (this.props.isLoggedIn) {
       return (
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <button onClick={this.handleLogout} className="button is-primary">Logout</button>
+              <Link href="/#" to="/profile" className="button is-primary">Profile: {this.props.userEmail}</Link>
+              <button onClick={this.props.onLogout} className="button is-primary">Logout</button>
             </div>
           </div>
         </div>
