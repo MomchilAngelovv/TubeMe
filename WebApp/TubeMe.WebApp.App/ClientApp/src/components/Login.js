@@ -5,7 +5,7 @@ export class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password:''
+      password: ''
     }
   }
 
@@ -29,7 +29,6 @@ export class Login extends Component {
     localStorage.setItem('AccessToken', response.accessToken);
 
     this.props.onLogin(response.userEmail);
-    this.props.history.push('/');
   }
 
   handleInputChange = (e) => {
@@ -41,10 +40,23 @@ export class Login extends Component {
     });
   }
 
+  handleGetData = async () =>{
+    let response = await(await fetch(`https://localhost:44367/api/welcome/testdata`, {
+      method: 'GEt',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('AccessToken') 
+      },
+    })).json();
+
+    console.log(response)
+  }
+
   render() {
     console.log(this.props)
     return (
       <React.Fragment>
+        <h1>Hello {this.props.userEmail}</h1>
         <div className="columns">
           <div className="column is-half">
             <div className="field">
@@ -68,6 +80,7 @@ export class Login extends Component {
             </div>
           </div>
         </div>
+        <button onClick={this.handleGetData}>GetData</button>
       </React.Fragment>
     );
   }

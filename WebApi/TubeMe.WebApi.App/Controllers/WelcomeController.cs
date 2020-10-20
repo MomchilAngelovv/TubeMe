@@ -19,6 +19,7 @@ namespace TubeMe.WebApi.App.Controllers
         [HttpGet("testdata")]
         public ActionResult<object> TestData()
         {
+            var user = this.User;
             var array = new List<int>();
 
             for (int i = 0; i < 3; i++)

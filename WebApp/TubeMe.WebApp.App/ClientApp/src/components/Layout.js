@@ -16,9 +16,9 @@ export class Layout extends Component {
   }
 
   handleLogin = (userEmail) => {
-    console.log('HandleLogin');
     this.setState({
       isLoggedIn: true,
+      userEmail: userEmail
     })
   }
 
@@ -33,10 +33,12 @@ export class Layout extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <NavMenu isLoggedIn={this.state.isLoggedIn} userEmail={this.state.userEmail} onLogout={this.handleLogout} />
-        <Login onLogin={this.handleLogin} />
-      </div>
+        <div className="container">
+          <Login onLogin={this.handleLogin} userEmail={this.state.userEmail}/>
+        </div>
+      </React.Fragment>
     );
   }
 }

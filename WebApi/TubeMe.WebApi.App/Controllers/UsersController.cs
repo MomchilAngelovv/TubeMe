@@ -47,20 +47,17 @@ namespace TubeMe.WebApi.App.Controllers
                 return Unauthorized();
             }
 
+            var userRole = (await this.userManager.GetRolesAsync(user)).Single();
             var tokenHandler = new JwtSecurityTokenHandler();
-
-            var now = DateTime.UtcNow;
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
                      new Claim(ClaimTypes.NameIdentifier, user.Id),
                      new Claim(ClaimTypes.Email, user.Email),
-                     new Claim(ClaimTypes.Email, user.Email),
+                     new Claim(ClaimTypes.Role, userRole),
                 }),
-
-                Expires = now.AddMinutes(15),
-
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Secret)), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -83,8 +80,6 @@ namespace TubeMe.WebApi.App.Controllers
 
             var response = new
             {
-                newUser.Id,
-                newUser.UserName,
                 newUser.Email,
                 newUser.CreatedOn
             };

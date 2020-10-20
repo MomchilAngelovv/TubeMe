@@ -57,32 +57,29 @@ namespace TubeMe.WebApi.App
             .AddEntityFrameworkStores<TubeMeDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddCors();
+            //services.AddCors();
             services.AddControllers();
 
-            services.Configure<JwtConfiguration>(this.configuration.GetSection("JwtConfiguration")); 
+            services.Configure<JwtConfiguration>(this.configuration.GetSection("JwtConfiguration"));
 
             //Jwt configuration
-            var jwtConfiguration = this.configuration.GetSection("JwtConfiguration").Get<JwtConfiguration>();
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = true;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Secret)),
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuer = true,
-                    ClockSkew = TimeSpan.FromMinutes(1)
-                };
-            });
+                    options.RequireHttpsMetadata = true;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["JwtConfiguration:Secret"])),
+                        ValidateIssuer = true,
+                        ValidIssuer = this.configuration["JwtConfiguration:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = this.configuration["JwtConfiguration:Audience"],
+                        ValidateLifetime = true
+                    };
+                });
 
             //Services
             services.AddTransient<IUsersService, UsersService>();
@@ -90,19 +87,19 @@ namespace TubeMe.WebApi.App
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(options =>
-            {
-                options.AllowAnyOrigin();
-                options.AllowAnyMethod();
-                options.AllowAnyHeader();
-            });
+            //app.UseCors(options =>
+            //{
+            //    options.AllowAnyOrigin();
+            //    options.AllowAnyMethod();
+            //    options.AllowAnyHeader();
+            //});
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ParseJwtTokenMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

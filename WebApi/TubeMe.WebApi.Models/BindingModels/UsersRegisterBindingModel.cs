@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace TubeMe.WebApi.Models.BindingModels
+﻿namespace TubeMe.WebApi.Models.BindingModels
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class UsersRegisterBindingModel
     {
         [Required]
