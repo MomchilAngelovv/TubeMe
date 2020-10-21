@@ -25,7 +25,6 @@ namespace TubeMe.WebApi.App.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize]
         public ActionResult<string> Welcome()
         {
             var user = this.User;

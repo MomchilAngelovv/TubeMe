@@ -9,8 +9,8 @@ export class Layout extends Component {
     super(props);
 
     this.state = {
-      isLoggedIn: localStorage.getItem('UserName') != null && localStorage.getItem('AccessToken') != null,
-      userEmail: localStorage.getItem('UserName'),
+      isLoggedIn: localStorage.getItem('UserEmail') != null && localStorage.getItem('AccessToken') != null,
+      userEmail: localStorage.getItem('UserEmail'),
       accessToken: localStorage.getItem('AccessToken')
     }
   }

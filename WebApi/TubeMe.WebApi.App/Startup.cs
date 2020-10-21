@@ -57,7 +57,7 @@ namespace TubeMe.WebApi.App
             .AddEntityFrameworkStores<TubeMeDbContext>()
             .AddDefaultTokenProviders();
 
-            //services.AddCors();
+            services.AddCors();
             services.AddControllers();
 
             services.Configure<JwtConfiguration>(this.configuration.GetSection("JwtConfiguration"));
@@ -87,12 +87,12 @@ namespace TubeMe.WebApi.App
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //app.UseCors(options =>
-            //{
-            //    options.AllowAnyOrigin();
-            //    options.AllowAnyMethod();
-            //    options.AllowAnyHeader();
-            //});
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();

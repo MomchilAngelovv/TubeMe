@@ -9,7 +9,7 @@ export class Login extends Component {
     }
   }
 
-  handleSubmit = async (e) => {
+  handleLogin = async (e) => {
     e.preventDefault();
 
     let data = {
@@ -25,7 +25,7 @@ export class Login extends Component {
       body: JSON.stringify(data)
     })).json();
 
-    localStorage.setItem('UserName', response.userEmail);
+    localStorage.setItem('UserEmail', response.userEmail);
     localStorage.setItem('AccessToken', response.accessToken);
 
     this.props.onLogin(response.userEmail);
@@ -40,20 +40,7 @@ export class Login extends Component {
     });
   }
 
-  handleGetData = async () =>{
-    let response = await(await fetch(`https://localhost:44367/api/welcome/testdata`, {
-      method: 'GEt',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('AccessToken') 
-      },
-    })).json();
-
-    console.log(response)
-  }
-
   render() {
-    console.log(this.props)
     return (
       <React.Fragment>
         <h1>Hello {this.props.userEmail}</h1>
@@ -75,12 +62,11 @@ export class Login extends Component {
 
             <div className="field is-grouped">
               <div className="control">
-                <button className="button is-primary" onClick={(e) => this.handleSubmit(e)}>Login</button>
+                <button className="button is-primary" onClick={(e) => this.handleLogin(e)}>Login</button>
               </div>
             </div>
           </div>
         </div>
-        <button onClick={this.handleGetData}>GetData</button>
       </React.Fragment>
     );
   }

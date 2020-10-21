@@ -25,24 +25,25 @@ namespace TubeMe.WebApi.App.Utilities
         public async Task Invoke(HttpContext context)
         {
             string authHeader = context.Request.Headers["Authorization"];
-
-            var token = authHeader?.Replace("Bearer ", string.Empty);
+           
             if (authHeader != null)
             {
+                var token = authHeader?.Replace("Bearer ", string.Empty);
                 var principal = new JwtSecurityTokenHandler()
-                                   .ValidateToken(token,
-                                       new TokenValidationParameters
-                                       {
-                                           ValidateIssuer = true,
-                                           ValidIssuer = this.configuration["JwtConfiguration:Issuer"],
-                                           ValidateIssuerSigningKey = true,
-                                           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["JwtConfiguration:Secret"])),
-                                           ValidAudience = this.configuration["JwtConfiguration:Audience"],
-                                           ValidateAudience = true,
-                                           ValidateLifetime = true,
-                                           ClockSkew = TimeSpan.FromMinutes(1),
-                                       },
-                                   out var validatedToken);
+                    .ValidateToken(
+                        token,
+                        new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = this.configuration["JwtConfiguration:Issuer"],
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["JwtConfiguration:Secret"])),
+                            ValidAudience = this.configuration["JwtConfiguration:Audience"],
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ClockSkew = TimeSpan.FromMinutes(1),
+                        },
+                    out var validatedToken);
 
                 context.User = principal;
 
