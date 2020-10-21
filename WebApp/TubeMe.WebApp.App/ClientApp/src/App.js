@@ -12,6 +12,8 @@ export default class App extends Component {
       accessToken: localStorage.getItem('AccessToken'),
       sum: 0,
     }
+
+    console.log('constructor')
   }
 
   handleLogin = (userEmail) => {
@@ -31,13 +33,12 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      isLoggedIn: localStorage.getItem('UserEmail') != null && localStorage.getItem('AccessToken') != null,
-      userEmail: localStorage.getItem('UserEmail'),
-      accessToken: localStorage.getItem('AccessToken')
-    })
+      console.log('componentDidMount')
   }
 
+  componentDidUpdate() {
+    console.log('componentDidUpdate')
+  }
   //  <Layout>
   //  <Route exact path='/' component={Home} />
   //</Layout>
@@ -48,10 +49,10 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('render')
     return (
       <React.Fragment>
-        <NavMenu sum={this.state.sum}>
-        </NavMenu>
+        <NavMenu sum={this.state.sum}></NavMenu>
         <Home onSum={this.handleSum}></Home>
       </React.Fragment>
     );

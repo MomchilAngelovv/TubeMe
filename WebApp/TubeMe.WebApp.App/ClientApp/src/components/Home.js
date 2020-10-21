@@ -35,12 +35,14 @@ export class Home extends Component {
     this.setState({ videos: newVideoArray, value: newVideoArray.reduce((a, b) => a.number + b.number) });
   }
   render() {
+    let { onSum } = this.props
+    let { value, videos } = this.state
     return (
       <React.Fragment>
         {this.renderVideos()}
         <hr />
-        <div>{this.state.value}</div>
-        <button onClick={(e) => this.props.onSum(e, this.state.videos.reduce((v1, v2) => v1.number + v2.number)) }>Set sum value to navbar</button>
+        <div>{value}</div>
+        <button onClick={(e) => onSum(e, videos.reduce((v1, v2) => v1.number + v2.number))}>Set sum value to navbar</button>
       </React.Fragment>
     );
   }
