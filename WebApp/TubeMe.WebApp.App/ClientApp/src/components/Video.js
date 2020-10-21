@@ -8,7 +8,7 @@ export default class Video extends Component {
       number: randomNumber
     })
 
-    this.props.onValueChange(randomNumber, this.props.id)
+    this.props.onValueChange(randomNumber, this.props.video)
   }
 
   render() {

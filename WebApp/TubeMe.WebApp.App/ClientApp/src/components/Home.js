@@ -27,14 +27,12 @@ export class Home extends Component {
     )
   }
 
-  handleValueChange = (value, videoId) => {
-    let remainingVideoos = this.state.videos
-      .filter(video => video.id !== videoId);
+  handleValueChange = (newNumber, video) => {
+    let videoIndex = this.state.videos.indexOf(video);
+    let newVideoArray = this.state.videos;
+    newVideoArray[videoIndex].number = newNumber;
 
-    this.setState({
-      videos: remainingVideoos
-    })
-    console.log('entered handler', videoId)
+    this.setState({ videos: newVideoArray });
   }
   render() {
     return (
