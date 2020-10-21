@@ -2,32 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export class NavMenu extends Component {
-  genereteUserButtons() {
-    if (this.props.isLoggedIn) {
-      return (
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <Link href="/#" to="/profile" className="button is-primary">Profile: {this.props.userEmail}</Link>
-              <button onClick={this.props.onLogout} className="button is-primary">Logout</button>
-            </div>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <Link href="/#" to="/register" className="button is-primary">Register</Link>
-              <Link href="/#" to="/login" className="button is-light">Login</Link>
-            </div>
-          </div>
-        </div>
-      )
-    }
-  }
-
   render() {
     return (
       <header>
@@ -54,7 +28,26 @@ export class NavMenu extends Component {
                 </div>
               </div>
             </div>
-            {this.genereteUserButtons()}
+            {this.props.isLoggedIn
+              ?
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <Link href="/#" to="/profile" className="button is-primary">Profile: {this.props.userEmail}</Link>
+                    <button onClick={this.props.onLogout} className="button is-primary">Logout</button>
+                  </div>
+                </div>
+              </div>
+              :
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <div>{this.props.sum}</div>
+                    <Link href="/#" to="/register" className="button is-primary">Register</Link>
+                    <Link href="/#" to="/login" className="button is-light">Login</Link>
+                  </div>
+                </div>
+              </div>}
           </div>
         </nav>
       </header>
