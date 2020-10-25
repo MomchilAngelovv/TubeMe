@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React from 'react';
 import { Route } from 'react-router-dom'
 
 import NavMenu from './NavMenu'
@@ -7,7 +7,7 @@ import Register from './Register';
 import Home from './Home';
 
 
-export default class Layout extends Component {
+export default class Layout extends React.Component {
   render() {
     return (
       <React.Fragment>

@@ -1,13 +1,14 @@
-﻿import React, { Component } from 'react'
+﻿import React from 'react'
 
-export default class Register extends Component {
+export default class Register extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      registerFailed: false
     }
   }
 
@@ -15,14 +16,34 @@ export default class Register extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  handleOnRegister = () => {
-    this.props.history.push("/")
+  handleOnRegister = async () => {
+    let data = {
+      email: this.state.email,
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword
+    }
+
+    let response = await fetch('https://localhost:44367/api/users/register', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) 
+    });
+
+    if (response.ok) {
+      this.props.history.push("/")
+    }
+    else {
+      this.setState({ registerFailed: true})
+    }
   }
 
   render() {
     return (
       <div className="columns is-centered">
         <div className="column is-half">
+          {this.state.registerFailed ? <div>Register failed</div> : null}
           <div className="field">
             <label className="label">Email</label>
             <div className="control">

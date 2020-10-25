@@ -12,6 +12,6 @@
         public string Password { get; set; }
         [Required]
         [Compare(nameof(Password))]
-        public string RepeatPassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }
