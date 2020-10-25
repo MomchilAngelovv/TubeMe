@@ -1,6 +1,23 @@
 ﻿import React, { Component } from 'react'
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      email: '',
+      password: ''
+    }
+  }
+
+  handleOnInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
+  handleOnLogin = () => {
+    this.props.history.push("/")
+  }
+
   render() {
     return (
       <div className="columns is-centered">
@@ -8,23 +25,20 @@ export default class Login extends Component {
           <div className="field">
             <label className="label">Email</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Text input" />
+              <input onChange={this.handleOnInputChange} name="email" type="text" placeholder="Email:" className="input" />
             </div>
           </div>
 
           <div className="field">
-            <label className="label">Passoword</label>
+            <label className="label">Password</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Text input" />
+              <input onChange={this.handleOnInputChange} name="password" type="password" placeholder="Password:" className="input" />
             </div>
           </div>
 
           <div className="field is-grouped">
             <div className="control">
-              <button className="button is-success">Login</button>
-            </div>
-            <div className="control">
-              <button className="button is-link is-light">Back</button>
+              <button onClick={this.handleOnLogin} className="button is-success">Login</button>
             </div>
           </div>
         </div>
