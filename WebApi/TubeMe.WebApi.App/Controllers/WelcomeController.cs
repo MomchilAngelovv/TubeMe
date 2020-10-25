@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using TubeMe.Data;
 
@@ -36,7 +37,7 @@ namespace TubeMe.WebApi.App.Controllers
         {
             var user = this.User;
 
-          
+
             var response = new
             {
                 Name = "asdas",

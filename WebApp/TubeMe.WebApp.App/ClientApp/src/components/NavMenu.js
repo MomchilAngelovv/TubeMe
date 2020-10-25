@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-export class NavMenu extends Component {
+export default class NavMenu extends Component {
   render() {
     return (
       <header>
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
-            <Link href="/#" to="/" className="navbar-item"><img src="https://img.favpng.com/17/19/10/turney-town-shell-logo-internet-online-and-offline-png-favpng-CcVyuzhwCY2g6XrdfXW94kCgB.jpg" alt="Description" /></Link>
-            <a href="/#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <a className="navbar-item" href="https://bulma.io">
+              <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" />
+            </a>
+
+            <a href='!#' role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
@@ -17,37 +20,30 @@ export class NavMenu extends Component {
 
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-start">
+              <a href='!#' className="navbar-item">Home</a>
+              <a href='!#' className="navbar-item">Documentation</a>
               <div className="navbar-item has-dropdown is-hoverable">
-                <a href="/#" className="navbar-link">More</a>
+                <a href='!#' className="navbar-link">More</a>
                 <div className="navbar-dropdown">
-                  <a href="/#" className="navbar-item">About</a>
-                  <a href="/#" className="navbar-item">Jobs</a>
-                  <a href="/#" className="navbar-item">Contact</a>
+                  <a href='!#' className="navbar-item">About</a>
+                  <a href='!#' className="navbar-item">Jobs</a>
+                  <a href='!#' className="navbar-item">Contact</a>
                   <hr className="navbar-divider" />
-                  <a href="/#" className="navbar-item">Report an issue</a>
+                  <a href='!#' className="navbar-item">Report an issue</a>
                 </div>
               </div>
             </div>
-            {this.props.isLoggedIn
-              ?
-              <div className="navbar-end">
-                <div className="navbar-item">
-                  <div className="buttons">
-                    <Link href="/#" to="/profile" className="button is-primary">Profile: {this.props.userEmail}</Link>
-                    <button onClick={this.props.onLogout} className="button is-primary">Logout</button>
-                  </div>
+
+            <div className="navbar-end">
+              <div className="navbar-item">
+                <div className="buttons">
+                  <a href='!#' className="button is-primary">
+                    <strong>Sign up</strong>
+                  </a>
+                  <a href='!#' className="button is-light">Log in</a>
                 </div>
               </div>
-              :
-              <div className="navbar-end">
-                <div className="navbar-item">
-                  <div className="buttons">
-                    <div>{this.props.sum}</div>
-                    <Link href="/#" to="/register" className="button is-primary">Register</Link>
-                    <Link href="/#" to="/login" className="button is-light">Login</Link>
-                  </div>
-                </div>
-              </div>}
+            </div>
           </div>
         </nav>
       </header>

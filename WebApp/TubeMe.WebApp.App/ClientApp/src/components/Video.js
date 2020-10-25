@@ -2,13 +2,7 @@
 
 export default class Video extends Component {
   handleOnClick = (e) => {
-    let randomNumber = Math.floor(Math.random() * 10);
-
-    this.setState({
-      number: randomNumber
-    })
-
-    this.props.onValueChange(randomNumber, this.props.video)
+    console.log(1)
   }
 
   render() {
