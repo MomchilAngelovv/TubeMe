@@ -25,60 +25,30 @@ namespace TubeMe.WebApi.App.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService usersService;
-        private readonly UserManager<TubeMeUser> userManager;
         private readonly IConfiguration configuration;
-        private readonly JwtConfiguration jwtConfiguration;
 
         public UsersController(
             IUsersService usersService,
-            IOptions<JwtConfiguration> jwtConfiguration,
-            UserManager<TubeMeUser> userManager, IConfiguration configuration)
+            IConfiguration configuration)
         {
             this.usersService = usersService;
-            this.userManager = userManager;
             this.configuration = configuration;
-            this.jwtConfiguration = jwtConfiguration.Value;
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<object>> Login(UsersLoginBindingModel bindingModel)
         {
-            var user = await this.userManager.FindByEmailAsync(bindingModel.Email);
-            if (user == null)
+            var loginResult = await this.usersService.LoginAsync(bindingModel.Email, bindingModel.Password);
+
+            if (loginResult == null)
             {
                 return Unauthorized();
             }
-
-            var hashedPassword = this.userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, bindingModel.Password);
-            if (hashedPassword != PasswordVerificationResult.Success)
-            {
-                return Unauthorized();
-            }
-
-            var userRole = (await this.userManager.GetRolesAsync(user)).Single();
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Audience = this.configuration["JwtConfiguration:Audience"],
-                Issuer = this.configuration["JwtConfiguration:Issuer"],
-                Subject = new ClaimsIdentity(new[]
-                {
-                     new Claim(ClaimTypes.NameIdentifier, user.Id),
-                     new Claim(ClaimTypes.Email, user.Email),
-                     new Claim(ClaimTypes.Role, userRole),
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Secret)), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var secutiryToken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(secutiryToken);
 
             var response = new
             {
-                UserEmail = bindingModel.Email,
-                AccessToken = token,
+               loginResult.UserEmail,
+               loginResult.AccessToken,
             };
 
             return response;
@@ -88,7 +58,6 @@ namespace TubeMe.WebApi.App.Controllers
         public async Task<ActionResult<object>> Register(UsersRegisterBindingModel bindingModel)
         {
             var newUser = await this.usersService.RegisterNewUserAsync(bindingModel.Email, bindingModel.Password);
-
 
             var response = new
             {

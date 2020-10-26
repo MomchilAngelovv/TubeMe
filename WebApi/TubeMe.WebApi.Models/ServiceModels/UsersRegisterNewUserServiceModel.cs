@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TubeMe.WebApi.Models.ServiceModels
+﻿namespace TubeMe.WebApi.Models.ServiceModels
 {
+    using System;
+
     public class UsersRegisterNewUserServiceModel
     {
         public string Id { get; set; }

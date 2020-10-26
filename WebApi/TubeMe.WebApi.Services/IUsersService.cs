@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using TubeMe.Data;
-using TubeMe.WebApi.Models.ServiceModels;
-
-namespace TubeMe.WebApi.Services
+﻿namespace TubeMe.WebApi.Services
 {
+    using System.Threading.Tasks;
+
+    using TubeMe.WebApi.Models.ServiceModels;
+
     public interface IUsersService
     {
+        Task<UsersLoginServiceModel> LoginAsync(string email, string password);
         Task<UsersRegisterNewUserServiceModel> RegisterNewUserAsync(string email, string password);
     }
 }

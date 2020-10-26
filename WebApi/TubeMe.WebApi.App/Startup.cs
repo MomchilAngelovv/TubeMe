@@ -60,9 +60,6 @@ namespace TubeMe.WebApi.App
             services.AddCors();
             services.AddControllers();
 
-            services.Configure<JwtConfiguration>(this.configuration.GetSection("JwtConfiguration"));
-
-            //Jwt configuration
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
