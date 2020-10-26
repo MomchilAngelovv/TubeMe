@@ -14,14 +14,32 @@ export default class Login extends React.Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  handleOnLogin = () => {
-    this.props.history.push("/")
+  handleOnLogin = async () => {
+    let data = {
+      email: this.state.email,
+      password: this.state.password,
+    }
+
+    let response = await fetch('https://localhost:44367/api/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      this.props.history.push("/")
+    } else {
+      this.setState({ registerFailed: true })
+    }
   }
 
   render() {
     return (
       <div className="columns is-centered">
         <div className="column is-half">
+          {this.state.registerFailed ? <div>Login failed</div> : null}
           <div className="field">
             <label className="label">Email</label>
             <div className="control">

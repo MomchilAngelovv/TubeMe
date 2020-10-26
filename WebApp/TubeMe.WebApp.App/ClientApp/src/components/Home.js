@@ -16,6 +16,7 @@ export default class Home extends React.Component {
     return (
       <React.Fragment>
         <h1>Logged user: {this.state.user.id} {this.state.user.email}</h1>
+        <button>Increment</button>
       </React.Fragment>
     );
   }

@@ -29,6 +29,13 @@ namespace TubeMe.WebApi.Services
             
             var result = await this.userManager.CreateAsync(newUser, password);
 
+            if (result.Succeeded == false)
+            {
+                throw new ArgumentException("Unable to create new user with those credentials!");
+            }
+
+            await this.userManager.AddToRoleAsync(newUser, "User");
+
             var serviceModel = new UsersRegisterNewUserServiceModel
             {
                 Id = newUser.Id,

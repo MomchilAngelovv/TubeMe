@@ -89,6 +89,7 @@ namespace TubeMe.WebApi.App.Controllers
         {
             var newUser = await this.usersService.RegisterNewUserAsync(bindingModel.Email, bindingModel.Password);
 
+
             var response = new
             {
                 newUser.Email,
