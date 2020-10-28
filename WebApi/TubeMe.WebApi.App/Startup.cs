@@ -80,10 +80,19 @@ namespace TubeMe.WebApi.App
 
             //Services
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IVideosService, VideosService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseRouting();
+
             app.UseCors(options =>
             {
                 options.AllowAnyOrigin();
@@ -91,8 +100,6 @@ namespace TubeMe.WebApi.App
                 options.AllowAnyHeader();
             });
 
-            app.UseHttpsRedirection();
-            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<ParseJwtTokenMiddleware>();

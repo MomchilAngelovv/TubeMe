@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TubeMe.Data;
 
 namespace TubeMe.Data.Migrations
 {
     [DbContext(typeof(TubeMeDbContext))]
-    partial class TubeMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201027092947_Add_Table_Videos")]
+    partial class Add_Table_Videos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

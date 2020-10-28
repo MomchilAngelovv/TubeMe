@@ -11,5 +11,6 @@ namespace TubeMe.Data
         public TubeMeDbContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<Video> Videos { get; set; }
     }
 }
