@@ -55,8 +55,6 @@ export default class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Logged user: {this.state.user.id} {this.state.user.email}</h1>
-        <button>Increment</button>
         <hr />
         <div className="columns is-centered">
           <div className="column is-half">
