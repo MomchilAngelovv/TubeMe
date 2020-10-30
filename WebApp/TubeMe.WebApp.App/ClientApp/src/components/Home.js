@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios'
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -38,14 +39,16 @@ export default class Home extends React.Component {
   }
 
   getVideoList = async () => {
-    let response = await(await fetch('https://localhost:44367/api/videos', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })).json();
 
-    return response.data;
+    let response = await axios.get("https://localhost:44367/api/videos")
+    //let response = await(await fetch('https://localhost:44367/api/videos', {
+    //  method: 'GET',
+    //  headers: {
+    //    'Content-Type': 'application/json'
+    //  },
+    //})).json();
+    console.log(response.data.data);
+    return response.data.data;
   }
 
   handleOnInputChange = (event) => {

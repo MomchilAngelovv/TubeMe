@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export default class NavMenu extends React.Component {
   render() {
@@ -35,9 +35,9 @@ export default class NavMenu extends React.Component {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
-                  <Link to="/profile" className="button is-primary"> <strong>Your profile: test@test.bg faac2efe7b134f57919aa402b1a4ca83</strong></Link>
-                  <Link to="/register" className="button is-primary"> <strong>Register</strong></Link>
-                  <Link to="/login" className="button is-light">Log in</Link>
+                  <NavLink to="/profile" className="button is-primary"> <strong>Your profile: test@test.bg faac2efe7b134f57919aa402b1a4ca83</strong></NavLink>
+                  <NavLink to="/register" className="button is-primary"> <strong>Register</strong></NavLink>
+                  <NavLink to="/login" className="button is-light">Log in</NavLink> 
                 </div>
               </div>
             </div>
