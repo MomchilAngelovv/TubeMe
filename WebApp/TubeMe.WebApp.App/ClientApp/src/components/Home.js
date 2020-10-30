@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -7,7 +8,7 @@ export default class Home extends React.Component {
 
     this.state = {
       user: {
-        id:"faac2efe7b134f57919aa402b1a4ca83",
+        id: "faac2efe7b134f57919aa402b1a4ca83",
         email: "test@test.bg",
       },
       videos: [],
@@ -17,7 +18,7 @@ export default class Home extends React.Component {
 
   async componentDidMount() {
     let allVideos = await this.getVideoList()
-    this.setState({ videos: allVideos})
+    this.setState({ videos: allVideos })
   }
 
   handleCreateVideo = async () => {
@@ -37,7 +38,7 @@ export default class Home extends React.Component {
     this.setState({ videos: allVideos });
   }
 
-  
+
   getVideoList = async () => {
 
     let response = await axios({
@@ -47,7 +48,7 @@ export default class Home extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-  
+
     return response.data.data;
   }
 
@@ -77,9 +78,12 @@ export default class Home extends React.Component {
         </div>
         <hr />
         {this.state.videos.map(video =>
-          <iframe key={video.id} width="420" height="315"
-            src={video.videoUrl}>
-          </iframe>
+          <div>
+            <Link to={`videos/${video.id}`} className="button is-success">More details</Link>
+            <iframe key={video.id} width="420" height="315"
+              src={video.videoUrl}>
+            </iframe>
+          </div>
         )}
       </React.Fragment>
     );

@@ -9,6 +9,7 @@ namespace TubeMe.WebApi.Services
     public interface IVideosService
     {
         public IEnumerable<Video> GetAll();
+        Video Details(string id);
         Task<string> CreateAsync(string videoUrl, string userId);
     }
 }

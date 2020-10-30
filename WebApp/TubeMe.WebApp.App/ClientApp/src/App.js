@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
 import Profile from './components/Profile';
+import VideoDetails from './components/VideoDetails';
 
 export default class App extends React.Component {
   render() {
@@ -15,6 +16,7 @@ export default class App extends React.Component {
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
         <Route exact path='/profile' component={Profile} />
+        <Route exact path='/videos/:videoId' component={VideoDetails} />
       </Layout>
     );
   }

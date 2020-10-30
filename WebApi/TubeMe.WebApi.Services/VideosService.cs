@@ -30,6 +30,11 @@ namespace TubeMe.WebApi.Services
             return video.VideoUrl;
         }
 
+        public Video Details(string id)
+        {
+            return this.db.Videos.FirstOrDefault(v => v.Id == id);
+        }
+
         public IEnumerable<Video> GetAll()
         {
             return this.db.Videos.ToList();

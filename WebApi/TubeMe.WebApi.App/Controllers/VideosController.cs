@@ -31,6 +31,21 @@ namespace TubeMe.WebApi.App.Controllers
             return response;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<object> GetDetails(string id)
+        {
+            var video = this.videosService.Details(id);
+
+            var response = new
+            {
+                video.Id,
+                video.VideoUrl,
+                video.CreatedOn
+            };
+
+            return response;
+        }
+
         [HttpPost]
         public async Task<ActionResult<object>> Create(VideosCreateBindingModel bindingModel)
         {
