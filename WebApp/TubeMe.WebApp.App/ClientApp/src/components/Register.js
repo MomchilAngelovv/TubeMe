@@ -1,4 +1,5 @@
 ﻿import React from 'react'
+import axios from 'axios'
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -17,21 +18,20 @@ export default class Register extends React.Component {
   }
 
   handleOnRegister = async () => {
-    let data = {
-      email: this.state.email,
-      password: this.state.password,
-      confirmPassword: this.state.confirmPassword
-    }
-
-    let response = await fetch('https://localhost:44367/api/users/register', {
-      method: 'POST', 
+    let response = await axios({
+      method: 'post',
+      baseURL: 'https://localhost:44367/api/users/register',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data) 
-    });
+      data: {
+        email: this.state.email,
+        password: this.state.password,
+        confirmPassword: this.state.confirmPassword
+      }
+    })
 
-    if (response.ok) {
+    if (response.status === 200) {
       this.props.history.push("/")
     }
     else {

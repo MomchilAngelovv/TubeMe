@@ -1,4 +1,5 @@
 ﻿import React from 'react'
+import axios from 'axios'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -6,7 +7,8 @@ export default class Login extends React.Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      registerFailed: false
     }
   }
 
@@ -15,20 +17,21 @@ export default class Login extends React.Component {
   }
 
   handleOnLogin = async () => {
-    let data = {
-      email: this.state.email,
-      password: this.state.password,
-    }
-
-    let response = await fetch('https://localhost:44367/api/users/login', {
-      method: 'POST',
+    let response = await axios({
+      method: 'post',
+      baseURL: 'https://localhost:44367/api/users/login',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
-    });
+      data: {
+        email: this.state.email,
+        password: this.state.password,
+      }
+    })
 
-    if (response.ok) {
+    console.log(response)
+
+    if (response.status === 200) {
       this.props.history.push("/")
     } else {
       this.setState({ registerFailed: true })

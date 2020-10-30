@@ -21,33 +21,33 @@ export default class Home extends React.Component {
   }
 
   handleCreateVideo = async () => {
-    let data = {
-      videoUrl: this.state.videoUrl,
-      userId: this.state.user.id
-    }
-
-    let response = await (await fetch('https://localhost:44367/api/videos', {
-      method: 'POST',
+    await axios({
+      method: 'post',
+      baseURL: 'https://localhost:44367/api/videos',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
-    })).json();
+      data: {
+        videoUrl: this.state.videoUrl,
+        userId: this.state.user.id
+      }
+    })
 
     let allVideos = await this.getVideoList()
     this.setState({ videos: allVideos });
   }
 
+  
   getVideoList = async () => {
 
-    let response = await axios.get("https://localhost:44367/api/videos")
-    //let response = await(await fetch('https://localhost:44367/api/videos', {
-    //  method: 'GET',
-    //  headers: {
-    //    'Content-Type': 'application/json'
-    //  },
-    //})).json();
-    console.log(response.data.data);
+    let response = await axios({
+      method: 'get',
+      baseURL: 'https://localhost:44367/api/videos',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  
     return response.data.data;
   }
 
