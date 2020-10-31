@@ -6,16 +6,11 @@ export default class VideoDetails extends React.Component {
     super(props)
 
     this.state = {
-      video: {
-        id: '',
-        videoUrl: '',
-        createdOn: ''
-      }
+      video: null
     }
   }
 
   async componentDidMount() {
-    console.log(this.props)
     let { videoId } = this.props.match.params
 
     let response = await axios({
@@ -30,13 +25,16 @@ export default class VideoDetails extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
-      <React.Fragment>
-        <h1>Video name: {this.state.video.id}</h1>
-        <p>Video Url: {this.state.video.videoUrl}</p>
-        <p>Created On: {this.state.video.createdOn}</p>
-      </React.Fragment>
+      this.state.video ? (
+        <React.Fragment>
+          <h1>Video name: {this.state.video.id}</h1>
+          <p>Video Url: {this.state.video.videoUrl}</p>
+          <p>Created On: {this.state.video.createdOn}</p>
+        </React.Fragment>
+      ) : (
+          <div>Loading video details...</div>
+        )
     )
   }
 }

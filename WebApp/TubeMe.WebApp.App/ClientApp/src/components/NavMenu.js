@@ -7,7 +7,7 @@ export default class NavMenu extends React.Component {
       <header>
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
-            <Link to="/" className="navbar-item"><img src="https://404store.com/2018/09/01/random-small-images43.md.png" width="112" height="28" /></Link>
+            <Link to="/" className="navbar-item"><img src="https://404store.com/2018/09/01/random-small-images43.md.png" width="112" height="28" alt="Who are you?" /></Link>
 
             <a href='!#' role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
               <span aria-hidden="true"></span>

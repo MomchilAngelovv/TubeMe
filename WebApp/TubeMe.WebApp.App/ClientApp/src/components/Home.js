@@ -78,9 +78,9 @@ export default class Home extends React.Component {
         </div>
         <hr />
         {this.state.videos.map(video =>
-          <div>
+          <div key={video.id}>
             <Link to={`videos/${video.id}`} className="button is-success">More details</Link>
-            <iframe key={video.id} width="420" height="315"
+            <iframe key={video.id} width="420" height="315" title={video.videoUrl}
               src={video.videoUrl}>
             </iframe>
           </div>
