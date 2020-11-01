@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
 
@@ -83,9 +84,17 @@ export default class Home extends React.Component {
             <iframe key={video.id} width="420" height="315" title={video.videoUrl}
               src={video.videoUrl}>
             </iframe>
-          </div>
+          </div> 
         )}
       </React.Fragment>
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    test: state.test
+  }
+}
+
+export default connect(mapStateToProps)(Home)
