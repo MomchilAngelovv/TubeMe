@@ -1,40 +1,24 @@
 ﻿import React from 'react'
-import axios from 'axios'
+import { connect } from 'react-redux'
 
-export default class VideoDetails extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      video: null
-    }
-  }
-
-  async componentDidMount() {
-    let { videoId } = this.props.match.params
-
-    let response = await axios({
-      method: 'get',
-      baseURL: `https://localhost:44367/api/videos/${videoId}`,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    this.setState({ video: response.data })
-  }
-
+class VideoDetails extends React.Component {
   render() {
     return (
-      this.state.video ? (
-        <React.Fragment>
-          <h1>Video name: {this.state.video.id}</h1>
-          <p>Video Url: {this.state.video.videoUrl}</p>
-          <p>Created On: {this.state.video.createdOn}</p>
-        </React.Fragment>
-      ) : (
-          <div>Loading video details...</div>
-        )
+      <React.Fragment>
+        <h1>Video name: {this.props.video.id}</h1>
+        <p>Video Url: {this.props.video.videoUrl}</p>
+        <p>Created On: {this.props.video.createdOn}</p>
+      </React.Fragment>
     )
   }
 }
+
+let mapStateToProps = (state, props) => {
+  let videoId = props.match.params.videoId
+
+  return {
+    video: state.videos.find(v => v.id == videoId)
+  }
+}
+
+export default connect(mapStateToProps)(VideoDetails)

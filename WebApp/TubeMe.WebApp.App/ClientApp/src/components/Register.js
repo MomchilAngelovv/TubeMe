@@ -31,6 +31,8 @@ export default class Register extends React.Component {
       }
     })
 
+    //Modify state with action pass to reducer
+
     if (response.status === 200) {
       this.props.history.push("/")
     }

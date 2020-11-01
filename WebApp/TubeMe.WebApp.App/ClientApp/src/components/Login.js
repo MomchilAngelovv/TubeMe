@@ -29,6 +29,7 @@ export default class Login extends React.Component {
       }
     })
 
+    //Modify state -> pass action to reducer
     console.log(response)
 
     if (response.status === 200) {
