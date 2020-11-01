@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 
 class VideoDetails extends React.Component {
   render() {
+    let { videoUrl, id, createdOn } = this.props.video
     return (
-      <React.Fragment>
-        <h1>Video name: {this.props.video.id}</h1>
-        <p>Video Url: {this.props.video.videoUrl}</p>
-        <p>Created On: {this.props.video.createdOn}</p>
-      </React.Fragment>
+      <div className="row">
+        <h1>{id} {createdOn}</h1>
+        <iframe width="100%" height="700" title={videoUrl} src={videoUrl}></iframe>
+      </div>
     )
   }
 }
@@ -17,7 +17,7 @@ let mapStateToProps = (state, props) => {
   let videoId = props.match.params.videoId
 
   return {
-    video: state.videos.find(v => v.id == videoId)
+    video: state.videos.find(v => v.id === videoId)
   }
 }
 

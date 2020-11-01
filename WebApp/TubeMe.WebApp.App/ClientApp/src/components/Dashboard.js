@@ -18,18 +18,16 @@ class Home extends React.Component {
       return (
         <div className="row">
           {this.props.videos.map(video =>
-            <div className="col s4">
+            <div className="col s4" key={video.id}>
               <div className="card">
                 <div className="card-image">
-                  <iframe key={video.id} width="100%" height="300" title={video.videoUrl}
-                    src={video.videoUrl}>
-                  </iframe>
+                  <iframe key={video.id} width="100%" height="300" title={video.videoUrl} src={video.videoUrl}></iframe>
                 </div>
                 <div className="card-content">
                   <p>Will put some additional text here.</p>
                 </div>
                 <div className="card-action">
-                  <a href="#">This is a link</a>
+                  <Link to={`/videos/${video.id}`}>Details</Link>
                 </div>
               </div>
             </div>
@@ -54,9 +52,8 @@ class Home extends React.Component {
         <div className="row">
           <form className="col s12" onSubmit={this.handleCreateVideo}>
             <div className="row">
-              <div class="input-field col s12">
+              <div className="input-field col s12">
                 <input onChange={this.handleOnInputChange} name="videoUrl" placeholder="Video Url:" type="email" className="validate" />
-                <label for="email">Video Url:</label>
               </div>
             </div>
             <div className="row">
