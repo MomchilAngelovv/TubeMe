@@ -12,6 +12,10 @@ let rootReducer = (state = initialState, action) => {
       let newVideos = [...state.videos]
       newVideos.push(action.payload);
       return { ...state, videos: newVideos };
+    case "REMOVE_VIDEO":
+      let remainingVideos = [...state.videos]
+      remainingVideos = remainingVideos.filter(v => v.id !== action.payload.id);
+      return { ...state, videos: remainingVideos };
     default:
       return state;
   }

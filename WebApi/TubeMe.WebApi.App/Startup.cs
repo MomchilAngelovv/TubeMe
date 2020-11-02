@@ -91,7 +91,6 @@ namespace TubeMe.WebApi.App
             }
 
             app.UseHttpsRedirection();
-            app.UseRouting();
 
             app.UseCors(options =>
             {
@@ -100,6 +99,7 @@ namespace TubeMe.WebApi.App
                 options.AllowAnyHeader();
             });
 
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<ParseJwtTokenMiddleware>();

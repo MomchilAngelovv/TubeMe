@@ -54,8 +54,7 @@ namespace TubeMe.WebApi.App.Controllers
             return response;
         }
 
-        [Authorize]
-        [HttpDelete("videoId")]
+        [HttpDelete("{videoId}")]
         public async Task<ActionResult<object>> Delete(string videoId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -68,6 +67,5 @@ namespace TubeMe.WebApi.App.Controllers
 
             return response;
         }
-
     }
 }
