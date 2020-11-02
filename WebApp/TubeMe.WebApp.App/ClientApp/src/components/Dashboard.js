@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-class Home extends React.Component {
+class Dashboard extends React.Component {
   handleOnInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -14,7 +14,7 @@ class Home extends React.Component {
   }
 
   renderMyVideos = () => {
-    if (this.props.videos) {
+    if (this.props.videos?.length > 0) {
       return (
         <div className="row">
           {this.props.videos.map(video =>
@@ -70,8 +70,15 @@ class Home extends React.Component {
 
 let mapStateToProps = (state) => {
   return {
+    currentUser: state.currentUser,
     videos: state.videos
   }
 }
 
-export default connect(mapStateToProps)(Home)
+let mapDispatchToProps = (dispatch) => {
+  return {
+    
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

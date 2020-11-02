@@ -64,7 +64,8 @@ namespace TubeMe.WebApi.Services
 
             var serviceModel = new UsersLoginServiceModel
             {
-                UserEmail = user.Email,
+                Id = user.Id,
+                Email = user.Email,
                 AccessToken = token,
             };
 
@@ -78,7 +79,7 @@ namespace TubeMe.WebApi.Services
                 Email = email,
                 UserName = email,
             };
-            
+
             var result = await this.userManager.CreateAsync(newUser, password);
 
             if (result.Succeeded == false)

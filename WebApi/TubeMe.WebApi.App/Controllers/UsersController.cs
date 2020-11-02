@@ -42,13 +42,14 @@ namespace TubeMe.WebApi.App.Controllers
 
             if (loginResult == null)
             {
-                return Unauthorized();
+                return this.Unauthorized();
             }
 
             var response = new
             {
-               loginResult.UserEmail,
-               loginResult.AccessToken,
+                loginResult.Id,
+                loginResult.Email,
+                loginResult.AccessToken,
             };
 
             return response;

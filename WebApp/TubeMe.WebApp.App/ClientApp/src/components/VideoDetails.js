@@ -21,4 +21,10 @@ let mapStateToProps = (state, props) => {
   }
 }
 
-export default connect(mapStateToProps)(VideoDetails)
+let mapDispatchToProps = (dispatch) => {
+  return {
+    
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VideoDetails)

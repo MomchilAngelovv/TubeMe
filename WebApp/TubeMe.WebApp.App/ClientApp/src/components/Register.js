@@ -1,7 +1,8 @@
 ﻿import React from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
-export default class Register extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props)
 
@@ -9,16 +10,16 @@ export default class Register extends React.Component {
       email: '',
       password: '',
       confirmPassword: '',
-      registerFailed: false
+      registerError: false
     }
   }
 
-  handleOnInputChange = (event) => {
+  registerFormInput = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  handleOnRegister = async () => {
-    let response = await axios({
+  register = () => {
+    axios({
       method: 'post',
       baseURL: 'https://localhost:44367/api/users/register',
       headers: {
@@ -30,15 +31,12 @@ export default class Register extends React.Component {
         confirmPassword: this.state.confirmPassword
       }
     })
-
-    //Modify state with action pass to reducer
-
-    if (response.status === 200) {
-      this.props.history.push("/")
-    }
-    else {
-      this.setState({ registerFailed: true})
-    }
+      .then((response) => {
+        this.props.history.push("/login");
+      })
+      .catch(response => {
+        this.setState({ registerError: true })
+      })
   }
 
   render() {
@@ -49,27 +47,27 @@ export default class Register extends React.Component {
           <div className="field">
             <label className="label">Email</label>
             <div className="control">
-              <input onChange={this.handleOnInputChange} name="email" type="text" placeholder="Email:" className="input" />
+              <input onChange={this.registerFormInput} name="email" type="text" placeholder="Email:" className="input" />
             </div>
           </div>
 
           <div className="field">
             <label className="label">Password</label>
             <div className="control">
-              <input onChange={this.handleOnInputChange} name="password" type="password" placeholder="Password:" className="input" />
+              <input onChange={this.registerFormInput} name="password" type="password" placeholder="Password:" className="input" />
             </div>
           </div>
 
           <div className="field">
             <label className="label">Confirm password</label>
             <div className="control">
-              <input onChange={this.handleOnInputChange} name="confirmPassword" type="password" placeholder="Confirm password:" className="input" />
+              <input onChange={this.registerFormInput} name="confirmPassword" type="password" placeholder="Confirm password:" className="input" />
             </div>
           </div>
 
           <div className="field is-grouped">
             <div className="control">
-              <button onClick={this.handleOnRegister} className="button is-success">Register</button>
+              <button onClick={this.register} className="button is-success">Register</button>
             </div>
           </div>
         </div>
@@ -77,3 +75,5 @@ export default class Register extends React.Component {
     )
   }
 }
+
+export default connect()(Register)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TubeMe.Data;
@@ -39,6 +40,11 @@ namespace TubeMe.WebApi.Services
         public IEnumerable<Video> GetAll()
         {
             return this.db.Videos.ToList();
+        }
+
+        public IEnumerable<Video> GetAll(Expression<Func<Video, bool>> filter)
+        {
+            return this.db.Videos.Where(filter);
         }
     }
 }

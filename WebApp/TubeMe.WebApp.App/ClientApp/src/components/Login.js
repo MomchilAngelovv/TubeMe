@@ -1,23 +1,26 @@
 ﻿import React from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       email: '',
       password: '',
-      registerFailed: false
+      wrongCredentials: false
     }
   }
 
-  handleOnInputChange = (event) => {
+  loginFormInput = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  handleOnLogin = async () => {
-    let response = await axios({
+  login = (event) => {
+    event.preventDefault();
+
+    axios({
       method: 'post',
       baseURL: 'https://localhost:44367/api/users/login',
       headers: {
@@ -28,43 +31,75 @@ export default class Login extends React.Component {
         password: this.state.password,
       }
     })
+      .then((response) => {
 
-    //Modify state -> pass action to reducer
-    console.log(response)
+        axios({
+          method: 'get',
+          baseURL: `https://localhost:44367/api/videos?userId=${response.data.id}`
+        })
+          .then((videosResponse) => {
+            this.props.setMyVideos(videosResponse.data.data)
+          })
+          .catch((response) => {
+          })
 
-    if (response.status === 200) {
-      this.props.history.push("/")
-    } else {
-      this.setState({ registerFailed: true })
+        console.log(response)
+        this.props.login(response.data)
+        this.props.history.push('/')
+      })
+      .catch(() => {
+        this.setState({ wrongCredentials: true })
+      })
+  }
+
+  showWrongCredentials = () => {
+    if (this.state.wrongCredentials) {
+      return (
+        <div>Invalid login credentials!</div>
+      )
+      return null
     }
   }
 
   render() {
     return (
-      <div className="columns is-centered">
-        <div className="column is-half">
-          {this.state.registerFailed ? <div>Login failed</div> : null}
-          <div className="field">
-            <label className="label">Email</label>
-            <div className="control">
-              <input onChange={this.handleOnInputChange} name="email" type="text" placeholder="Email:" className="input" />
+      <div className="row">
+        <form onSubmit={this.login} className="col s12">
+          <h1 className="center-align">Login</h1>
+          <hr />
+          {this.showWrongCredentials()}
+          <div className="row">
+            <div className="input-field col s6">
+              <i className="material-icons prefix">account_circle</i>
+              <input onChange={this.loginFormInput} id="input-email" name="email" type="text" />
+              <label htmlFor="input-email">Email</label>
+            </div>
+            <div className="input-field col s6">
+              <i className="material-icons prefix">vpn_key</i>
+              <input onChange={this.loginFormInput} id="input-password" name="password" type="password" />
+              <label htmlFor="input-password">Password</label>
             </div>
           </div>
-
-          <div className="field">
-            <label className="label">Password</label>
-            <div className="control">
-              <input onChange={this.handleOnInputChange} name="password" type="password" placeholder="Password:" className="input" />
-            </div>
+          <div className="row">
+            <button className="waves-effect waves-light btn col s6">Login</button>
           </div>
-
-          <div className="field is-grouped">
-            <div className="control">
-              <button onClick={this.handleOnLogin} className="button is-success">Login</button>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     )
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+
+  }
+}
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    login: (currentUser) => { dispatch({ type: "LOGIN", payload: currentUser }) },
+    setMyVideos: (videos) => { dispatch({ type: "SET_MY_VIDEOS", payload: videos }) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

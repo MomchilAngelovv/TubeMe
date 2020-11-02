@@ -21,11 +21,11 @@ namespace TubeMe.WebApi.App.Controllers
             this.videosService = videosService;
         }
 
-        public ActionResult<object> Get()
+        public ActionResult<object> Get(string userId)
         {
             var response = new
             {
-                Data = this.videosService.GetAll()
+                Data = this.videosService.GetAll(v => v.UserId == userId)
             };
 
             return response;
