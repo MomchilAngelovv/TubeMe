@@ -2,6 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { videosActions } from '../actions/videosActions'
 
 class VideoDetails extends React.Component {
   constructor(props) {
@@ -77,7 +78,7 @@ let mapStateToProps = (state, props) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    removeVideo: (id) => dispatch({ type: "REMOVE_VIDEO", payload: { id } })
+    removeVideo: (id) => dispatch(videosActions.removeVideo(id))
   }
 }
 

@@ -1,6 +1,7 @@
 ﻿import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { usersActions } from '../actions/usersActions'
 
 class Login extends React.Component {
   constructor(props) {
@@ -97,8 +98,8 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    login: (currentUser) => { dispatch({ type: "LOGIN", payload: currentUser }) },
-    setMyVideos: (videos) => { dispatch({ type: "SET_MY_VIDEOS", payload: videos }) }
+    login: (currentUser) => { dispatch(usersActions.login(currentUser)) },
+    setMyVideos: (videos) => { dispatch(usersActions.setMyVideos(videos)) }
   }
 }
 

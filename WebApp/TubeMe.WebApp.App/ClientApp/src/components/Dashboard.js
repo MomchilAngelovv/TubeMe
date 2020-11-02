@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { videosActions } from '../actions/videosActions'
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -104,7 +105,7 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    addVideo: (video) => dispatch({ type: "ADD_VIDEO", payload: video })
+    addVideo: (video) => dispatch(videosActions.createVideo(video))
   }
 }
 
