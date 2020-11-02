@@ -26,13 +26,16 @@ namespace TubeMe.WebApi.App.Controllers
     {
         private readonly IUsersService usersService;
         private readonly IConfiguration configuration;
+        private readonly IVideosService videosService;
 
         public UsersController(
             IUsersService usersService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IVideosService videosService)
         {
             this.usersService = usersService;
             this.configuration = configuration;
+            this.videosService = videosService;
         }
 
         [HttpPost("login")]
@@ -64,6 +67,17 @@ namespace TubeMe.WebApi.App.Controllers
             {
                 newUser.Email,
                 newUser.CreatedOn
+            };
+
+            return response;
+        }
+
+        [HttpGet("{userId}/videos")]
+        public ActionResult<object> GetUserVideos(string userId)
+        {
+            var response = new
+            {
+                Data = this.videosService.GetAll(v => v.UserId == userId)
             };
 
             return response;

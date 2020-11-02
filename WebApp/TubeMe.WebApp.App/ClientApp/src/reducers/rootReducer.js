@@ -8,6 +8,10 @@ let rootReducer = (state = initialState, action) => {
       return { ...state, currentUser: null, videos: null };
     case "SET_MY_VIDEOS":
       return { ...state, videos: action.payload };
+    case "ADD_VIDEO":
+      let newVideos = [...state.videos]
+      newVideos.push(action.payload);
+      return { ...state, videos: newVideos };
     default:
       return state;
   }

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TubeMe.Data;
 using TubeMe.WebApi.Models.BindingModels;
@@ -21,15 +23,7 @@ namespace TubeMe.WebApi.App.Controllers
             this.videosService = videosService;
         }
 
-        public ActionResult<object> Get(string userId)
-        {
-            var response = new
-            {
-                Data = this.videosService.GetAll(v => v.UserId == userId)
-            };
-
-            return response;
-        }
+       
 
         [HttpGet("{id}")]
         public ActionResult<object> GetDetails(string id)
@@ -47,16 +41,33 @@ namespace TubeMe.WebApi.App.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<object>> Create(VideosCreateBindingModel bindingModel)
+        public async Task<ActionResult<object>> Post(VideosCreateBindingModel bindingModel)
         {
-            var createdVideoUrl = await this.videosService.CreateAsync(bindingModel.VideoUrl, bindingModel.UserId);
+            var createdVideo = await this.videosService.CreateAsync(bindingModel.VideoUrl, bindingModel.UserId);
 
             var response = new
             {
-                NewVideoUrl = createdVideoUrl
+                createdVideo.Id,
+                createdVideo.VideoUrl
             };
 
             return response;
         }
+
+        [Authorize]
+        [HttpDelete("videoId")]
+        public async Task<ActionResult<object>> Delete(string videoId)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.videosService.DeleteAsync(videoId, userId);
+
+            var response = new
+            {
+                Deleted = true
+            };
+
+            return response;
+        }
+
     }
 }

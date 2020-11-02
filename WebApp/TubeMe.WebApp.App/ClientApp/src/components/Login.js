@@ -35,7 +35,7 @@ class Login extends React.Component {
 
         axios({
           method: 'get',
-          baseURL: `https://localhost:44367/api/videos?userId=${response.data.id}`
+          baseURL: `https://localhost:44367/api/users/${response.data.id}/videos`
         })
           .then((videosResponse) => {
             this.props.setMyVideos(videosResponse.data.data)

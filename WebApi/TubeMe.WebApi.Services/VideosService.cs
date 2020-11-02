@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TubeMe.Data;
+using TubeMe.WebApi.Models.ServiceModels;
 
 namespace TubeMe.WebApi.Services
 {
@@ -18,7 +19,7 @@ namespace TubeMe.WebApi.Services
             this.db = db;
         }
 
-        public async Task<string> CreateAsync(string videoUrl, string userId)
+        public async Task<VideosCreateServiceModel> CreateAsync(string videoUrl, string userId)
         {
             var video = new Video
             {
@@ -29,7 +30,21 @@ namespace TubeMe.WebApi.Services
             await this.db.Videos.AddAsync(video);
             await this.db.SaveChangesAsync();
 
-            return video.VideoUrl;
+            var result = new VideosCreateServiceModel
+            {
+                Id = video.Id,
+                VideoUrl = video.VideoUrl
+            };
+
+            return result;
+        }
+
+        public async Task DeleteAsync(string videoId, string userId)
+        {
+            var videoToDelete = this.db.Videos.SingleOrDefault(v => v.Id == videoId && v.UserId == userId);
+
+            this.db.Videos.Remove(videoToDelete);
+            await this.db.SaveChangesAsync();
         }
 
         public Video Details(string id)

@@ -4,13 +4,40 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 class Dashboard extends React.Component {
-  handleOnInputChange = (event) => {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      videoUrl: null
+    }
+  }
+  videoCreateFormInput = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  handleCreateVideo = (e) => {
+  createVideo = (e) => {
     e.preventDefault();
-    console.log(1)
+
+    if (this.state.videoUrl && this.props.currentUser) {
+      axios({
+        method: 'post',
+        baseURL: 'https://localhost:44367/api/videos',
+        data: {
+          videoUrl: this.state.videoUrl,
+          userId: this.props.currentUser.id
+        }
+      })
+        .then((response) => {
+          let video = {
+            id: response.data.id,
+            videoUrl: response.data.videoUrl
+          }
+
+          this.props.addVideo(video)
+        })
+        .catch((error) => {
+        })
+    }
   }
 
   renderMyVideos = () => {
@@ -50,10 +77,10 @@ class Dashboard extends React.Component {
         <hr />
         <h1 className="center-align">Add video:</h1>
         <div className="row">
-          <form className="col s12" onSubmit={this.handleCreateVideo}>
+          <form className="col s12" onSubmit={this.createVideo}>
             <div className="row">
               <div className="input-field col s12">
-                <input onChange={this.handleOnInputChange} name="videoUrl" placeholder="Video Url:" type="email" className="validate" />
+                <input onChange={this.videoCreateFormInput} name="videoUrl" placeholder="Video Url:" type="text" />
               </div>
             </div>
             <div className="row">
@@ -77,7 +104,7 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    
+    addVideo: (video) => dispatch({ type: "ADD_VIDEO", payload: video })
   }
 }
 
