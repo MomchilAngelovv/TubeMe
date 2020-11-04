@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Xml;
 using TubeMe.Data;
 
 namespace TubeMe.WebApi.App.Controllers
@@ -28,7 +29,6 @@ namespace TubeMe.WebApi.App.Controllers
 
         public ActionResult<string> Welcome()
         {
-            var user = this.User;
             return "Welcome";
         }
 
@@ -36,7 +36,6 @@ namespace TubeMe.WebApi.App.Controllers
         public ActionResult<object> TestData()
         {
             var user = this.User;
-
 
             var response = new
             {
